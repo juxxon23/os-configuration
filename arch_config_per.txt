@@ -1,0 +1,111 @@
+# Set dvorak-programmer as main keyboard
+localectl --no-convert set-x11-keymap us pc105 dvorak
+
+# Set background images with persistence in i3-config
+exec nitrogen --restore
+exec_always --no-startup-id nitrogen --restore
+
+# Archive manager and theme switcher
+pacman -S pcmanfm lxappearance
+
+# xterm copy-paste functions .Xresources
+xterm*VT100.Translations: #override \ 
+Shift <KeyPress> Insert: insert-selection(CLIPBOARD) \n\ 
+Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n\ 
+Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\ 
+Ctrl <Btn1Up>: exec-formatted("xdg-open '%t'", PRIMARY)
+
+# kitty terminal emulator
+pacman -S kitty
+
+# set kitty as default terminal emulator i3-config
+bindsym $mod+Return exec kitty
+
+# zsh 
+pacman -S zsh
+
+# set zsh as default shell
+chsh -s /usr/bin/zsh
+
+# zsh fonts
+pacman -S noto-fonts noto-fonts-emoji noto-fonts-extra awesome-terminal-fonts
+
+# plugins and themes
+# oh-my-zsh
+# zsh-syntax-highlighting
+# zsh-autosuggestions
+# powerlevel10k
+
+# Remove window titles i3-config
+new_window none
+new_window pixel 0
+hide_edge_borders both
+
+# Audio manager
+pacman -S pavucontrol
+
+# Change PS1 with Prompt elements in powerlevel10k .p10k.zsh
+
+# Change prompt colors .p10k.zsh
+typeset -g POWERLEVEL9K_USER_FOREGROUND=63
+typeset -g POWERLEVEL9K_DIR_FOREGROUND=99
+typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=111
+typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=111
+typeset -g POWERLEVEL9K_TIME_FOREGROUND=42
+typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=9  # opt2: 202
+
+# Fastfetch, imagemagick for display images in kitty
+pacman -S fastfetch imagemagick
+
+# Test if imagemagick works and fastfetch display images
+fastfetch --logo [image_source]
+
+# Init fastfetch config
+fastfetch --gen-config
+
+# Load config changes
+fastfetch --load-config ~/.config/fastfetch/config.jsonc
+
+# Emacs
+pacman -S emacs
+
+# Doom-Emacs
+# common-lisp (TO-DO)
+
+# nvim
+pacman -S neovim
+
+# Copy nvim configuration  
+git clone https://github.com/juxxon23/nvim-configuration.git
+mkdir ~/.config/nvim
+cp nvim-configuration/init.vim ~/.config/nvim/
+
+# Plugin Manager (vim-plug)
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+# Media player
+pacman -S vlc
+
+# Screenshots
+pacman -S gnome-screenshot
+
+# AUR helper (yet another yogurt)
+git -C /tmp/ clone https://aur.archlinux.org/yay.git
+cd /tmp/yay/
+makepkg -sic
+
+# Games
+pacman -S xonotic 
+yay -S minecraft-launcher
+
+# Maxima and graphical interface
+pacman -S webkit2gtk-4.1 maxima-sbcl
+yay -S wxmaxima
+
+# Nodejs and NPM
+pacman -S nodejs npm
+
+# Ruby and bundler
+pacman -S ruby rubygems
+gem install bundler
