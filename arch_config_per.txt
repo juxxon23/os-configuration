@@ -1,5 +1,5 @@
-# Set dvorak-programmer as main keyboard
-localectl --no-convert set-x11-keymap us pc105 dvorak
+# Set dvorak-programmer as main keyboard variant, secondary qwerty.
+localectl --no-convert set-x11-keymap us,us pc105 dvp, grp:win_space_toggle
 
 # Set background images with persistence in i3-config
 exec nitrogen --restore
@@ -87,6 +87,9 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 # Media player
 pacman -S vlc
 
+# Image viewer
+pacman -S feh
+
 # Screenshots
 pacman -S gnome-screenshot
 
@@ -109,3 +112,6 @@ pacman -S nodejs npm
 # Ruby and bundler
 pacman -S ruby rubygems
 gem install bundler
+
+# Study utilities
+pacman -S obsidian minder
