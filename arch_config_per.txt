@@ -1,3 +1,13 @@
+# WM installation
+pacman -S xorg xorg-xinit
+pacman -S i3
+cp /etc/X11/xinit/xinitrc ~/.xinitrc
+nano .xinitrc #delete from "twm" and add "exec i3"
+pacman -S pcmanfm kitty firefox git
+startx
+pacman -S dmenu alsa-firmware pulseaudio pulseaudio-alsa pavucontrol gvfs udisks2
+pulseaudio -D
+
 # Set dvorak-programmer as main keyboard variant, secondary qwerty.
 localectl --no-convert set-x11-keymap us,us pc105 dvp, grp:win_space_toggle
 

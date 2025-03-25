@@ -1,0 +1,66 @@
+#Load dvp keyboard
+localectl list-keymaps
+loadkeys dvorak-programmer
+
+#Load spanish language
+echo "es_CO.UTF-8 UTF-8" > /etc/locale.gen
+locale-gen
+export LANG=es_CO.UTF-8
+
+#Hard drive partitioning
+fdisk -l #boot marked with (*)
+lsblk
+cfdisk /dev/hd #create root(*) and swap partition
+mkfs.ext4 /dev/hd_root #ext4 format for root partition
+mount /dev/hd_root
+mkswap /dev/hd_swap #swap format
+swapon /dev/hd_swap #turn on swap
+
+#Base and Linux installation
+pacstrap /mnt base base-devel nano
+pacstrap /mnt linux linux-firmware linux-headers mkinitcpio
+
+#Automatic partition mounting
+genfstab /mnt >> /mnt/etc/fstab
+
+#System configuration
+arch-chroot /mnt
+nano /etc/locale.gen #Activate "es_CO.UTF-8 UTF-8"
+echo "LANG=es_CO.UTF-8" > /etc/locale.conf
+ln -sf /usr/share/zoneinfo/America/Bogota /etc/localtime
+hwclock -w #sync time
+echo KEYMAP=dvorak-programmer > /etc/vconsole.conf
+echo host_name > /etc/hostname
+passwd root
+useradd -m -g users -G wheel -s /bin/bash user_name
+passwd user_name
+nano /etc/sudoers #add user_name ALL=(ALL:ALL)ALL
+pacman -Sy archlinux-keyring && pacman -Su #update keyring
+pacman -S dhcp dhcpcd networkmanager reflector #network services
+systemctl enable dhcpcd NetworkManager
+reflector --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist #save repo faster
+
+#Grub installation
+pacman -S grub grub-bios os-prober ntfs-3g
+grub-install /dev/hd #grub data in /boot/
+nano /etc/default/grub #act/deac GRUB_DISABLE_OS_PROBER=false
+os-prober
+
+#If the win10 partition is not recognized
+mkdir /mnt/winboot
+mount /dev/win_boot /mnt/winboot/
+os-prober
+grub-mkconfig -o /boot/grub/grub.cfg #generate config file
+mkiniticpio -P #generate initial RAM disk image (initrd/initramfs)
+
+#If grub doesn't boot win10 correctly
+nano /etc/grub.d/40_custom #manual recognition
+menuentry "Windows 10" {
+	insmod ntfs
+	set root='(hd0,1)' #(1) refers to the partition number
+	chainloader +1
+}
+update-grub
+grub-mkconfig -o /boot/grub/grub.cfg
+exit
+
