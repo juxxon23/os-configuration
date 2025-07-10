@@ -5,8 +5,12 @@ cp /etc/X11/xinit/xinitrc ~/.xinitrc
 nano .xinitrc #delete from "twm" and add "exec i3"
 pacman -S pcmanfm kitty firefox git
 startx
-pacman -S dmenu alsa-firmware pulseaudio pulseaudio-alsa pavucontrol gvfs udisks2
+pacman -S dmenu alsa-firmware pulseaudio pulseaudio-alsa pavucontrol gvfs udisks2 xclip
 pulseaudio -D
+
+ # display manager
+sudo pacman -S lightdm lightdm-gtk-greeter
+sudo systemctl enable lightdm
 
 # Set dvorak-programmer as main keyboard variant, secondary qwerty.
 localectl --no-convert set-x11-keymap us,us pc105 dvp, grp:win_space_toggle
@@ -107,6 +111,17 @@ pacman -S gnome-screenshot
 git -C /tmp/ clone https://aur.archlinux.org/yay.git
 cd /tmp/yay/
 makepkg -sic
+
+# Activating numlock
+sudo pacman -S numlockx
+sudo yay -S mkinitcpio-numlock
+# Enable after kernel boots in the initramfs
+HOOKS=(... numlock ...) # add hook in /etc/mkinitcpio.conf
+mkinitcpio -P # regenerate initramfs image
+# Enable in lightdm
+greeter-setup-script=/usr/bin/numlockx on # add in "[Seat:*] section" in /etc/lightdm/lightdm.conf
+# Enable in i3
+exec_always --no-startup-id numlockx on # add in .config/i3/config
 
 # Games
 pacman -S xonotic 
