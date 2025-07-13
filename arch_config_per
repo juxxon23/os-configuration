@@ -118,6 +118,24 @@ set $ws1 "1: icon application"
 xprop # Command to see class_name application
 for_window [class="class_name"] move to workspace $[workspace_variable]
 
+# i3 bar
+font pango: Droid Sans Mono 10 # font
+# Add color scheme with transparency
+i3bar_command i3bar --transparency 
+tray_output none # Turn off system tray
+
+# Using i3status
+mkdir .config/i3status
+cp /etc/i3status.conf .config/i3status/ # edit indicators
+status_command i3status -c /home/$USER/.config/i3status/i3status.conf # add to i3
+
+# i3blocks
+sudo pacman -S i3blocks
+mkdir .config/i3blocks
+cp /etc/i3blocks.conf .config/i3blocks/ # add entries for created scripts 
+status_command i3blocks -c /home/$USER/.config/i3blocks/i3blocks.conf # add to i3
+
+# i3 gaps configuration
 
 
 # --------------------------------------------------
