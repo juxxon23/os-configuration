@@ -34,8 +34,10 @@ pulseaudio -D # daemonize after startup
 sudo pacman -S lightdm lightdm-gtk-greeter
 sudo systemctl enable lightdm
 
-# Fonts & Icons
-sudo pacman -S noto-fonts-emoji noto-fonts-extra awesome-terminal-fonts terminus-font papirus-icon-theme
+# Theme, Fonts, Icons & Switcher utility
+sudo pacman -S noto-fonts-emoji noto-fonts-extra awesome-terminal-fonts 
+terminus-font ttf-font-awesome ttf-ubuntu-font-family materia-gtk-theme 
+tela-circle-icon-theme-nord lxappearance
 FONT=ter-v16b # add to /etc/vconsole.conf
 sudo mkinitcpio -P # regenerate initramfs
 
@@ -68,14 +70,11 @@ exec_always --no-startup-id nitrogen --restore # add to .config/i3/config
 # Ranger file manager
 sudo pacman -S ranger poppler w3m highlight mediainfo imagemagick
 
-# Fastfetch
-sudo pacman -S fastfetch
-fastfetch --logo [image_source] # Test if imagemagick works and fastfetch display images
-fastfetch --gen-config # Init fastfetch config
-fastfetch --load-config ~/.config/fastfetch/config.jsonc # Load config changes
-
-# Theme switcher
-pacman -S lxappearance
+# Terminal transparency & fading effect
+sudo pacman -S picom
+background_opacity 0.9 # set in .config/kitty/kitty.conf
+exec_always --no-startup-id picom -b -f # add to .config/i3/config
+ 
 
 
 # Games
@@ -102,10 +101,26 @@ sudo pacman -S emacs
 # EXTRAS ------------------------------------------
 # -------------------------------------------------
 
-# Hide window title bars, add to .config/i3/config
+# i3 customization --------------------------------
+# Hide window title bars
 default_border pixel 1
 default_floating_border pixel 1
 
+# Toggle tiling/floating 
+bindsym $mod+f fullscreen toggle
+
+# Font
+font pango:Ubuntu Regular 9 
+
+# Names & Icons for dedicated workspaces
+set $ws1 "1: icon application"
+# Allocate applications to workspaces
+xprop # Command to see class_name application
+for_window [class="class_name"] move to workspace $[workspace_variable]
+
+
+
+# --------------------------------------------------
 # Change PS1 with Prompt elements in powerlevel10k .p10k.zsh
 # Change prompt colors .p10k.zsh
 typeset -g POWERLEVEL9K_USER_FOREGROUND=63
@@ -121,3 +136,9 @@ Shift <KeyPress> Insert: insert-selection(CLIPBOARD) \n\
 Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n\ 
 Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\ 
 Ctrl <Btn1Up>: exec-formatted("xdg-open '%t'", PRIMARY)
+
+# Fastfetch
+sudo pacman -S fastfetch
+fastfetch --logo [image_source] # Test if imagemagick works and fastfetch display images
+fastfetch --gen-config # Init fastfetch config
+fastfetch --load-config ~/.config/fastfetch/config.jsonc # Load config changes
