@@ -74,7 +74,12 @@ sudo pacman -S ranger poppler w3m highlight mediainfo imagemagick
 sudo pacman -S picom
 background_opacity 0.9 # set in .config/kitty/kitty.conf
 exec_always --no-startup-id picom -b -f # add to .config/i3/config
- 
+
+# Grub theme
+tar -xf Graphite-grub2-theme.tar.xz # download from https://www.pling.com/p/1676418/
+cd grub2
+sudo ./install.sh -b
+
 # Games
 sudo pacman -S xonotic 
 yay -S minecraft-launcher
