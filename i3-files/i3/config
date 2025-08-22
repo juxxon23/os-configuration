@@ -117,7 +117,7 @@ set $ws3 "3:  Godot"
 set $ws4 "4:  VM"
 set $ws5 "5:  Music"
 set $ws6 "6:  Gaming"
-set $ws7 "7"
+set $ws7 "7:  Design"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
@@ -184,10 +184,11 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 # Transparency: E6 - 90%, CC - 80%, 4D - 30% 
 bar {
+        position top
         status_command i3blocks -c /home/$USER/.config/i3blocks/i3blocks.conf
         font pango: Droid Sans Mono 10
         i3bar_command i3bar --transparency
-        tray_output none
+        #tray_output none
         colors {
                 background #0000004D
                 statusline #ffffff
@@ -223,6 +224,7 @@ for_window [class="Godot"] move to workspace $ws3
 #for_window [class=""] move to workspace $ws4
 #for_window [class=""] move to workspace $ws5
 for_window [class="retroarch"] move to workspace $ws6
+for_window [class="Gimp"] move to workspace $ws7
 
 # Start picom compositor
 exec_always --no-startup-id picom -b -f
