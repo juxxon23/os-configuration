@@ -5,7 +5,8 @@ exec i3 # add to .xinitrc, replace "twm"
 startx
 
 # Set dvorak-programmer as main keyboard variant, secondary qwerty.
-localectl --no-convert set-x11-keymap us,us pc105 dvp, grp:win_space_toggle
+localectl --no-convert set-x11-keymap us,us pc105 dvp, grp:ralt_rshift_toggle
+
 
 # Install some utilities
 sudo pacman -S kitty zsh neovim firefox git pcmanfm gvfs udisks2 xclip 
