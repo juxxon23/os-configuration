@@ -6,7 +6,7 @@ startx
 
 # Set dvorak-programmer as main keyboard variant, secondary qwerty.
 localectl --no-convert set-x11-keymap us,us pc105 dvp, grp:ralt_rshift_toggle
-
+setxkbmap -layout epo # Set esperanto layout for current sesion
 
 # Install some utilities
 sudo pacman -S kitty zsh neovim firefox git pcmanfm gvfs udisks2 xclip 
