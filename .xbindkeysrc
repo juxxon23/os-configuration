@@ -1,0 +1,9 @@
+# control+shift + kp_down Activate keyboard layout 2 for current sesion
+"setxkbmap -model pc105 -layout epo"
+  m:0x15 + c:88
+
+
+# control+shift + kp_end Activate keyboard layout 1 for current sesion
+"setxkbmap -model pc105 -layout us,us -variant dvp, -option grp:ralt_rshift_toggle"
+  m:0x15 + c:87
+
