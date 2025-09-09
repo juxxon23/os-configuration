@@ -6,13 +6,9 @@ startx
 
 # Persistently set dvorak-programmer as main keyboard variant, secondary qwerty.
 localectl --no-convert set-x11-keymap us,us pc105 dvp, grp:ralt_rshift_toggle
-# Temporarily set layouts for keyboard (use xbindkeys)
+# Temporarily set layouts for keyboard
 setxkbmap -model pc105 -layout epo # esperanto layout
 setxkbmap -model pc105 -layout us,us -variant dvp, -option grp:ralt_rshift_toggle
-# Force reload of xbindkeys
-killall -HUP xbindkeys
-xbindkeys -f ~/.xbindkeysrc
-xbindkeys # add to .xinitrc after i3
 
 # Install some utilities
 sudo pacman -S kitty zsh neovim firefox git pcmanfm gvfs udisks2 xclip 
@@ -151,6 +147,8 @@ set $refresh_i3blocks pkill -RTMIN+10 i3blocks # Signal for refresh i3blocks
 
 # i3 gaps configuration
 
+# Add bindsym for active different keyboard layouts
+
 # --------------------------------------------------
 # Change PS1 with Prompt elements in powerlevel10k .p10k.zsh
 # Change prompt colors .p10k.zsh
@@ -173,3 +171,14 @@ sudo pacman -S fastfetch
 fastfetch --logo [image_source] # Test if imagemagick works and fastfetch display images
 fastfetch --gen-config # Init fastfetch config
 fastfetch --load-config ~/.config/fastfetch/config.jsonc # Load config changes
+
+# Xmodmap to print current modifier table
+xmodmap
+
+# Find keycodes for a particular key
+xbindkeys --key
+xbindkeys --multikey
+
+# Force reload of xbindkeys
+killall -HUP xbindkeys
+xbindkeys -f ~/.xbindkeysrc
