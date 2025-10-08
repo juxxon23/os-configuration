@@ -113,12 +113,12 @@ bindsym $mod+a focus parent
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1:  Terminal"
 set $ws2 "2:  Browser"
-set $ws3 "3:  Godot"
-set $ws4 "4:  VM"
-set $ws5 "5:  Music"
-set $ws6 "6:  Gaming"
-set $ws7 "7:  Design"
-set $ws8 "8"
+set $ws3 "3:  Game-DEV"
+set $ws4 "4:  Gaming"
+set $ws5 "5:  Design"
+set $ws6 "6:  Video"
+set $ws7 "7:  VM"
+set $ws8 "8:  Music"
 set $ws9 "9"
 set $ws10 "10"
 
@@ -220,11 +220,13 @@ client.background       #ffffff
 # Allocate applications to workspaces
 for_window [class="kitty"] move to workspace $ws1
 for_window [class="firefox"] move to workspace $ws2
+for_window [class="Chromium"] move to workspace $ws2
 for_window [class="Godot"] move to workspace $ws3
-#for_window [class=""] move to workspace $ws4
+for_window [class="retroarch"] move to workspace $ws4
+for_window [class="Gimp"] move to workspace $ws5
+for_window [class="Inkscape"] move to workspace $ws5
+for_window [class="kdenlive"] move to workspace $ws6
 #for_window [class=""] move to workspace $ws5
-for_window [class="retroarch"] move to workspace $ws6
-for_window [class="Gimp"] move to workspace $ws7
 
 # Start picom compositor
 exec_always --no-startup-id picom -b -f

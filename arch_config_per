@@ -147,7 +147,7 @@ set $refresh_i3blocks pkill -RTMIN+10 i3blocks # Signal for refresh i3blocks
 
 # i3 gaps configuration
 
-# Add bindsym for active different keyboard layouts
+# Add bindsym to enable different keyboard layouts
 
 # --------------------------------------------------
 # Change PS1 with Prompt elements in powerlevel10k .p10k.zsh
